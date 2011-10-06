@@ -1,0 +1,14 @@
+.TicketSummary {
+	background-color: #CCC;
+	color: #333;
+	margin-bottom: 20px;
+	padding: 10px;
+	vertical-align: text-top;
+
+	.borderRadius(5px);
+	.boxShadow(2px 2px 5px #333);
+	.gradientV(#DDD, #CCC, #DDD, #CCC);
+}
+.TicketSummary:hover {
+	background: #EEE;
+}

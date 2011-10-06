@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+										 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- Lets override properties by specifying -D arguments at runtime -->
+	<bean id="jpaPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<property name="placeholderPrefix" value="£{"/>
+		<property name="properties">
+			<util:properties>
+				<prop key="channels.hibernate.hbm2ddl.auto">update</prop>
+				<prop key="channels.hibernate.show_sql">false</prop>
+				<prop key="channels.hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</prop>
+				<prop key="channels.hibernate.search.default.locking_strategy">none</prop>
+				<prop key="channels.hibernate.search.worker.execution">async</prop>
+				<prop key="channels.hibernate.search.worker.thread_pool.size">2</prop>
+				<prop key="channels.hibernate.search.worker.buffer_queue.max">100</prop>
+				<prop key="channels.hibernate.search.default.sharding_strategy.nbr_of_shards">1</prop>
+				<prop key="channels.hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</prop>
+			</util:properties>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   					   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   					   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<!-- Scan the package for @Controller annotated classes -->
+	<context:component-scan base-package="net.achingbrain.bigboard.spring.mvc"/>
+	<context:annotation-config/>
+
+	<!-- Internationalisation. This MessageSource is auto loaded into the ApplicationContext at start-up and is
+	    exposed to the FreeMarker view via a RequestContext -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="5"/>
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/language/Error</value>
+				<value>/WEB-INF/language/Home</value>
+				<value>/WEB-INF/language/PageNotFound</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="order" value="0" />
+        <!-- this is false so that controller mappings are matched after the context root, not including it. -->
+		<property name="alwaysUseFullPath" value="false" />
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="order" value="0" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+	</bean>
+
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+	</bean>
+
+	<!-- Forwards AJAX requests -->
+	<bean id="ajaxRequestForwarder" class="org.bbqjs.spring.ajax.RequestForwarder">
+		<property name="forwardToSelfSignedCertificateServers" value="true" />
+	</bean>
+
+	<!-- Maps URLs to controllers -->
+	<!-- Custom annotation handler mapping for @Controller support. We set alwaysUseFullPath
+		in order to circumvent the default UrlPathHelper behaviour which strips the
+		root context from the URL when attempting to locate a handler. -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="order" value="0" />
+		<property name="alwaysUseFullPath" value="true" />
+	</bean>
+
+	<!-- Provides support for converting an HTTP message containing a JSON pay
+		load into a POJO and back again. Note that this support is not provided by
+		the default Spring configuration (spring.remoting:annotation-driven) which is why we
+		need a custom adapter. -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="order" value="1" />
+		<property name="alwaysUseFullPath" value="true" />
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Allows us to map URLs (and fragments of URLs) to Controllers directly.
+		Works in parallel with annotation based configuration allowing us mix different
+		handler strategies. -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="2" />
+		<property name="alwaysUseFullPath" value="true" />
+		<property name="mappings">
+			<props>
+				<prop key="/backend/getLanguage">languageController</prop>
+				<prop key="/forward">ajaxRequestForwarder</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 404 controller -->
+	<bean id="pageNotFoundController" class="org.bbqjs.spring.mvc.PageController">
+		<property name="view" value="pagenotfound"/>
+	</bean>
+
+</beans>

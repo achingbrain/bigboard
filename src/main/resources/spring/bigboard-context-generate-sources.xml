@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Conditionally import controllers that generate css and js files on the fly
+		or don't, depending on project configuration -->
+	<import resource="classpath:spring/bigboard-context-generate-sources-${generate.sources}.xml"/>
+
+</beans>

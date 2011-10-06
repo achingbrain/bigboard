@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="
+				http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/mvc        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<!-- Imported when we are not generating js and css files on the fly -->
+	<mvc:resources mapping="/js/**" location="/js/" order="2"/>
+	<mvc:resources mapping="/css/**" location="/css/" order="2"/>
+	<mvc:resources mapping="/images/**" location="/images/" order="2"/>
+
+	<!-- Language controller -->
+	<bean id="languageController" class="org.bbqjs.spring.mvc.LanguageController">
+		<property name="defaultLocale" value="en_GB"/>
+		<property name="supportedLocales">
+			<list>
+				<value>en_GB</value>
+				<value>en_US</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="3"/>
+		<property name="alwaysUseFullPath" value="true"/>
+		<property name="defaultHandler">
+			<ref bean="pageNotFoundController"/>
+		</property>
+		<property name="mappings">
+			<props>
+			</props>
+		</property>
+	</bean>
+
+</beans>

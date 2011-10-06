@@ -1,0 +1,8 @@
+.TicketBoard {
+	vertical-align: text-top;
+}
+.TicketBoard .LoadingNotification {
+	color: #FFF;
+	margin: 10px;
+	background: url(/images/bbq/gui/LoadingNotification/333333.gif) no-repeat left center;
+}

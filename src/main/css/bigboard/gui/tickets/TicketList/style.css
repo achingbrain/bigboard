@@ -1,0 +1,16 @@
+.TicketList {
+	padding: 10px;
+	margin: 10px 0 10px 10px;
+	width: 14%;
+	display: inline-block;
+	background-color: #555;
+	vertical-align: text-top;
+
+	.borderRadius(5px);
+}
+.TicketList h3 {
+	color: #FFF;
+	margin-bottom: 10px;
+	font-size: 1.4em;
+	font-weight: bold;
+}

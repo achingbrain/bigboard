@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   					   http://www.springframework.org/schema/mvc        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<mvc:resources mapping="/js/libs/**" location="/js/libs/" order="2"/>
+	<mvc:resources mapping="/css/static/**" location="/css/static/" order="2"/>
+
+	<!-- Allows us to map URLs (and fragments of URLs) to Controllers directly.
+		Works in parallel with annotation based configuration allowing us mix different
+		handler strategies. -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="3"/>
+		<property name="alwaysUseFullPath" value="true"/>
+		<property name="defaultHandler">
+			<ref bean="pageNotFoundController"/>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="/js/generated/*">jsController</prop>
+				<prop key="/css/generated/*">cssController</prop>
+				<prop key="/images/**">imageController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Exception handling
+	<bean id="exceptionHandler" class="org.bbqjs.spring.mvc.ErrorResponder" /> -->
+
+	<!-- Dynamically builds js files for development purposes
+		 Recieves requests via rules defined in src/test/resource/debug-web.xml
+		 Will not be used in production
+	 -->
+	<bean id="jsController" class="org.bbqjs.spring.debug.JavaScriptCompilerServlet">
+		<property name="pagePackage" value="${js.page.package}"/>
+		<property name="path" value="/js/generated"/>
+		<property name="sourceRoots">
+			<list>
+				<value>src/main/javascript</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Dynamically builds css files for development purposes
+		 Recieves requests via rules defined in src/test/resource/debug-web.xml
+		 Will not be used in production
+	 -->
+	<bean id="cssController" class="org.bbqjs.spring.debug.CSSCompilerServlet">
+		<property name="pagePackage" value="${js.page.package}"/>
+		<property name="path" value="/css/generated"/>
+		<property name="extension" value="less"/>
+		<property name="includes">
+			<list>
+				<value>boilerplate.less</value>
+			</list>
+		</property>
+		<property name="sourceRoots">
+			<list>
+				<value>src/main/css</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Serves image files out of the css source directory or the webapp's images folder -->
+	<bean id="imageController" class="org.bbqjs.spring.debug.ImageServingServlet">
+		<property name="path" value="/images" />
+		<property name="sourceRoots">
+			<list>
+				<value>src/main/css</value>
+				<value>src/main/webapp/images</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Language controller -->
+	<bean id="languageController" class="org.bbqjs.spring.debug.LanguageController">
+		<property name="defaultLocale" value="en_GB"/>
+		<property name="supportedLocales">
+			<list>
+				<value>en_GB</value>
+				<value>en_US</value>
+			</list>
+		</property>
+		<property name="pagePackage" value="${js.page.package}"/>
+		<property name="sourceRoots">
+			<list>
+				<value>src/main/javascript</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

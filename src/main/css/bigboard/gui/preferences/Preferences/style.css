@@ -1,0 +1,20 @@
+.Preferences {
+	background-color: #A7A7A7;
+	padding: 20px;
+	position: fixed;
+	top: 100px;
+	width: 500px;
+	left: 50%;
+	margin-left: -250px;
+	z-index: 100;
+
+	.borderRadius(10px);
+}
+.Preferences label {
+	display: block;
+	padding: 10px 0;
+}
+
+.Preferences .TextField {
+	width: 98%;
+}

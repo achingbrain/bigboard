@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+										 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- Lets override properties by specifying -D arguments at runtime -->
+	<bean id="mongoPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<property name="placeholderPrefix" value="£{"/>
+		<property name="properties">
+			<util:properties>
+				<prop key="beacon.database.host">${beacon.test.database.host}</prop>
+				<prop key="beacon.database.username">${beacon.test.database.username}</prop>
+				<prop key="beacon.database.password">${beacon.test.database.password}</prop>
+				<prop key="beacon.database.schema">${beacon.test.database.schema}</prop>
+			</util:properties>
+		</property>
+	</bean>
+
+</beans>

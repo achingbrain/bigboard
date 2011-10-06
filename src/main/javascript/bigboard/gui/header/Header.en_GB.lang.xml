@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="header.title">The Big Board</entry>
+	<entry key="header.server">Choose server</entry>
+	<entry key="header.milestone">Showing milestone</entry>
+</properties>

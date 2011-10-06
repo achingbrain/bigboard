@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="serversettings.header">Server settings</entry>
+	<entry key="serversettings.chooseticketsystem">Please specify the URL and type of system to connect to</entry>
+	<entry key="serversettings.url">URL</entry>
+	<entry key="serversettings.systems.trac">Trac</entry>
+	<entry key="serversettings.needsauthentication">Needs authentication</entry>
+	<entry key="serversettings.enterdetails">Please enter your log in credentials</entry>
+	<entry key="serversettings.username">Username</entry>
+	<entry key="serversettings.password">Password</entry>
+	<entry key="serversettings.test">Test</entry>
+	<entry key="serversettings.couldnotconnect">Could not connect to remote server</entry>
+	<entry key="serversettings.incorrectcredentials">Please check your username and password</entry>
+	<entry key="serversettings.detailsok">Successfully connected</entry>
+	<entry key="serversettings.done">Done</entry>
+</properties>

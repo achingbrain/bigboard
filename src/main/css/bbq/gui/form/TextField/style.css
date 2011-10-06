@@ -1,0 +1,9 @@
+.TextField {
+	padding: 3px;
+	font-size: 1em;
+	border: 1px solid #717171;
+}
+.TextField.FormField_error {
+	border: 1px solid #F10;
+	background-color: #FEE;
+}

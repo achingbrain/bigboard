@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>bigboard</name>
+	<groupId>net.achingbrain</groupId>
+	<artifactId>bigboard</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		
+		<!-- Build settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<generate.sources>true</generate.sources>
+		<use.local.js.libraries>false</use.local.js.libraries>
+		<bigboard.debug>true</bigboard.debug>
+		<js.page.package>bigboard.page</js.page.package>
+
+		<!-- Plugin versions -->
+		<maven.plugin.jetty.version>6.1.26</maven.plugin.jetty.version>
+		<maven.plugin.resources.version>2.4.3</maven.plugin.resources.version>
+		<maven.plugin.compiler.version>2.3.2</maven.plugin.compiler.version>
+		<maven.plugin.jar.version>2.2</maven.plugin.jar.version>
+		<maven.plugin.surefire.version>2.5</maven.plugin.surefire.version>
+		<maven.plugin.release.version>2.1</maven.plugin.release.version>
+		<maven.plugin.exec.version>1.1.1</maven.plugin.exec.version>
+		<maven.plugin.minify.version>1.3.5</maven.plugin.minify.version>
+		<maven.plugin.bbq.version>1.1.4-SNAPSHOT</maven.plugin.bbq.version>
+		<maven.plugin.less.version>0.0.5</maven.plugin.less.version>
+		<maven.plugin.cobertura.version>2.5.1</maven.plugin.cobertura.version>
+		<maven.plugin.findbugs.version>2.3.2</maven.plugin.findbugs.version>
+
+		<!-- Dependency versions -->
+		<spring.version>3.0.6.RELEASE</spring.version>
+		<spring.webflow.version>2.0.8.RELEASE</spring.webflow.version>
+		<bbq.version>1.1.4-SNAPSHOT</bbq.version>
+		<junit.version>4.8.2</junit.version>
+		<freemarker.version>2.3.14</freemarker.version>
+		<jetty.version>6.1.26</jetty.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<commons.lang.version>2.3</commons.lang.version>
+		<commons.pool.version>1.5.6</commons.pool.version>
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+		<jackson.version>1.8.3</jackson.version>
+		<servlet.api.version>2.5</servlet.api.version>
+		<bouncycastle.version>140</bouncycastle.version>
+		<mockito.version>1.8.4</mockito.version>
+	</properties>
+
+	<build>
+		<finalName>ROOT</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/javascript</directory>
+			</resource>
+			<resource>
+				<directory>src/main/css</directory>
+			</resource>
+
+			<!--
+				This tells maven to do variable replacement (filtering) on our files
+				the resources dir
+			-->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/javascript</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
+  		<plugins>
+			
+			<plugin>
+				<groupId>org.bbqjs</groupId>
+				<artifactId>bbq-maven-plugin</artifactId>
+				<version>${maven.plugin.bbq.version}</version>
+				<executions>
+					<execution>
+						<id>Compile JavaScript</id>
+						<goals>
+							<goal>marinateJS</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/js/bbq</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Compile CSS</id>
+						<goals>
+							<goal>marinateCSS</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/css/bbq</outputDirectory>
+							<libraries>
+								<library>boilerplate.less</library>
+							</libraries>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Compile Language</id>
+						<goals>
+							<goal>marinateLanguage</goal>
+						</goals>
+						<configuration>
+							<defaultLanguage>en_GB</defaultLanguage>
+							<supportedLanguages>
+								<supportedLanguage>en_GB</supportedLanguage>
+								<supportedLanguage>en_US</supportedLanguage>
+							</supportedLanguages>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Test JavaScript</id>
+						<goals>
+							<goal>unitTestJavaScript</goal>
+						</goals>
+						<configuration>
+							<testDirectory>${project.basedir}/src/test/javascript</testDirectory>
+							<includes>
+								<include>javascript/libs/prototype-1.7.0.0.js</include>
+								<include>javascript/libs/unittest-1.8.0.js</include>
+							</includes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Copy Images</id>
+						<goals>
+							<goal>copyImages</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/images</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.bbqjs</groupId>
+						<artifactId>bbq-js</artifactId>
+						<version>${bbq.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>yevgeniy.melnichuk</groupId>
+				<artifactId>maven-less-plugin</artifactId>
+				<version>${maven.plugin.less.version}</version>
+				<executions>
+					<execution>
+						<id>Parse static less</id>
+						<goals>
+							<goal>parse</goal>
+						</goals>
+						<configuration>
+							<inputDirectory>${project.basedir}/src/main/webapp/css/static</inputDirectory>
+							<outputDirectory>${project.build.directory}/css/less</outputDirectory>
+							<compileFilesWithExtension>less</compileFilesWithExtension>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Parse generated less</id>
+						<goals>
+							<goal>parse</goal>
+						</goals>
+						<configuration>
+							<inputDirectory>${project.build.directory}/css/bbq</inputDirectory>
+							<outputDirectory>${project.build.directory}/css/bbq-less</outputDirectory>
+							<compileFilesWithExtension>css</compileFilesWithExtension>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>maven-minify-plugin</artifactId>
+				<version>${maven.plugin.minify.version}</version>
+				<executions>
+					<execution>
+						<id>minify-homepage</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+						<configuration>
+							<cssSourceFiles>
+								<param>less/Home.css</param>
+								<param>bbq-less/Home.css</param>
+							</cssSourceFiles>
+							<cssFinalFile>Home.css</cssFinalFile>
+							<jsSourceFiles>
+								<param>bbq/Home.js</param>
+							</jsSourceFiles>
+							<jsFinalFile>Home.js</jsFinalFile>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<webappSourceDir>${project.build.directory}</webappSourceDir>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${maven.plugin.exec.version}</version>
+				<configuration>
+					<mainClass>net.achingbrain.bigboard.launcher.Launcher</mainClass>
+				</configuration>
+			</plugin>
+			
+			<!-- Configure compiler for Java 6 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.plugin.compiler.version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<excludes>
+						<exclude>**/*Point*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${maven.plugin.cobertura.version}</version>
+				<configuration>
+					<check/>
+					<formats>
+						<format>xml</format>
+					</formats>
+				</configuration>
+				<executions>
+					<execution>
+						<id>site</id>
+						<phase>site</phase>
+						<goals>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.plugin.findbugs.version}</version>
+				<executions>
+					<execution>
+						<id>site</id>
+						<phase>site</phase>
+						<goals>
+							<goal>findbugs</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>bbq-repo-releases</id>
+			<url>https://github.com/bbqjs/bbq-maven-repo/raw/master/releases</url>
+		</repository>
+		<repository>
+			<id>bbq-repo-snapshots</id>
+			<url>https://github.com/bbqjs/bbq-maven-repo/raw/master/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- Where to get maven plugins from -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bbq-repo-releases</id>
+			<url>https://github.com/bbqjs/bbq-maven-repo/raw/master/releases</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>bbq-repo-snapshots</id>
+			<url>https://github.com/bbqjs/bbq-maven-repo/raw/master/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<dependencies>
+		<!-- Compile time dependencies -->
+		
+		<!-- Spring MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<!-- Freemarker dependencies -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		
+		<!-- BBQ JavaScript library -->
+		<dependency>
+			<groupId>org.bbqjs</groupId>
+			<artifactId>bbq-js</artifactId>
+			<version>${bbq.version}</version>
+		</dependency>
+
+		<!-- BBQ Spring Integration -->
+		<dependency>
+			<groupId>org.bbqjs</groupId>
+			<artifactId>bbq-spring-integration</artifactId>
+			<version>${bbq.version}</version>
+		</dependency>
+		
+		<!-- Jackson provides JSON/POJO mapping -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- Provided dependencies -->
+		
+		<!-- Servlet bits -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- For starting Jetty -->
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jsp-2.1-jetty</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+
+</project>
