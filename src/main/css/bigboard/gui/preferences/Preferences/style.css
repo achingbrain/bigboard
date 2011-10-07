@@ -1,5 +1,5 @@
 .Preferences {
-	background-color: #A7A7A7;
+	background-color: #908f8f;
 	padding: 20px;
 	position: fixed;
 	top: 100px;
@@ -7,8 +7,12 @@
 	left: 50%;
 	margin-left: -250px;
 	z-index: 100;
+	color: #FFF;
+	border: 5px solid #EEE;
 
+	.boxShadow(2px 2px 5px #333);
 	.borderRadius(10px);
+	.gradientV(#908f8f, #757575, #908f8f, #757575);
 }
 .Preferences label {
 	display: block;
