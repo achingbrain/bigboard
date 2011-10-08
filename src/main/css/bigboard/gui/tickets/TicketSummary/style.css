@@ -1,3 +1,10 @@
+@feature_start: #8bf08b;
+@feature_end: desaturate(darken(@feature_start, 20%), 20%);
+@defect_start: #f0928b;
+@defect_end: desaturate(darken(@defect_start, 20%), 10%);
+@enhancement_start: #ecf08b;
+@enhancement_end: desaturate(darken(@enhancement_start, 20%), 20%);
+
 .TicketSummary {
 	background-color: #CCC;
 	color: #333;
@@ -12,4 +19,38 @@
 }
 .TicketSummary:hover {
 	background: #EEE;
+	cursor: pointer;
+}
+.TicketSummary.TicketSummary_type_feature {
+	.gradientV(@feature_start, @feature_end, @feature_start, @feature_end);
+}
+.TicketSummary.TicketSummary_type_feature:hover {
+	background: @feature_start;
+}
+.TicketSummary.TicketSummary_type_defect {
+	.gradientV(@defect_start, @defect_end, @defect_start, @defect_end);
+}
+.TicketSummary.TicketSummary_type_defect:hover {
+	background: @defect_start;
+}
+.TicketSummary.TicketSummary_type_enhancement {
+	.gradientV(@enhancement_start, @enhancement_end, @enhancement_start, @enhancement_end);
+}
+.TicketSummary.TicketSummary_type_enhancement:hover {
+	background: @enhancement_start;
+}
+.TicketSummary h4 {
+	clear: both;
+	padding-top: 5px;
+	font-weight: bold;
+}
+.TicketSummary h5 {
+	float: left;
+}
+.TicketSummary h6 {
+	float: right;
+}
+.TicketSummary img {
+	float: left;
+	margin: 0 5px 5px 0;
 }

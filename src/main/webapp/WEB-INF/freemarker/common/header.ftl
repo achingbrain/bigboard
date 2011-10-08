@@ -24,6 +24,12 @@
 
 		</#if>
 
+		<!--[if IE]>
+			<script src="/js/libs/base64-1.0/base64.js"></script>
+		<![endif]-->
+
+		<script src="/js/libs/crypto-1.0/crypto.js"></script>
+
 		<#if settings.generateSources>
 
 		<#-- Magic rel type triggers LESS compiler -->
