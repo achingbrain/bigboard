@@ -44,27 +44,51 @@ bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 			return;
 		}
 
+		if(this._tickets.length == 0) {
+			this.appendChild(DOMUtil.createElement("p", Language.get("ticketboard.noticket"), {className: "no_ticket"}));
+
+			return;
+		}
+
 		// sort tickets into groups
 		var groups = {};
+		var filter = false;
 
-		currentPage.server.getTicketStatuses().each(function(status) {
-			groups[status.status] = [];
-		});
+		if(currentPage.server.getTicketStatuses().length > 0) {
+			filter = true;
+
+			currentPage.server.getTicketStatuses().each(function(status) {
+				groups[status.status] = [];
+			});
+		}
 
 		this._tickets.each(function(ticket) {
-			if(!groups[ticket.getStatus()]) {
-				return;
+			if(Object.isUndefined(groups[ticket.getStatus()])) {
+				if(filter) {
+					return;
+				}
+
+				groups[ticket.getStatus()] = [];
 			}
 
 			groups[ticket.getStatus()].push(ticket);
 		});
 
-		currentPage.server.getTicketStatuses().each(function(status) {
-			this.appendChild(new bigboard.gui.tickets.TicketList({
-				name: status.title,
-				max: status.max,
-				tickets: groups[status.status]
-			}));
-		}.bind(this));
+		if(filter) {
+			currentPage.server.getTicketStatuses().each(function(status) {
+				this.appendChild(new bigboard.gui.tickets.TicketList({
+					name: status.title,
+					max: status.max,
+					tickets: groups[status.status]
+				}));
+			}.bind(this));
+		} else {
+			for(var status in groups) {
+				this.appendChild(new bigboard.gui.tickets.TicketList({
+					name: status,
+					tickets: groups[status]
+				}));
+			}
+		}
 	}
 });

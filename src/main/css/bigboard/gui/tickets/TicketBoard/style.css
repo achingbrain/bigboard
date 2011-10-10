@@ -6,3 +6,6 @@
 	margin: 10px;
 	background: url(/images/bbq/gui/LoadingNotification/333333.gif) no-repeat left center;
 }
+.TicketBoard .no_ticket {
+	margin: 10px;
+}
