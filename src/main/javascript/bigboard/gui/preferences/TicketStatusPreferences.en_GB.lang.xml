@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="ticketstatuses.types">Ticket statuses (e.g. In review, Testing, etc)</entry>
+	<entry key="ticketstatuses.add">Add</entry>
+	<entry key="ticketstatuses.delete">Delete</entry>
+	<entry key="ticketstatuses.save">Save</entry>
+	<entry key="ticketstatuses.status">Status</entry>
+	<entry key="ticketstatuses.title">Title</entry>
+	<entry key="ticketstatuses.max">Max</entry>
+</properties>

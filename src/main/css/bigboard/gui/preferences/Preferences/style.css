@@ -1,24 +1,29 @@
 .Preferences {
-	background-color: #908f8f;
 	padding: 20px;
 	position: fixed;
 	top: 100px;
-	width: 500px;
+	width: 700px;
 	left: 50%;
-	margin-left: -250px;
+	margin-left: -350px;
 	z-index: 100;
 	color: #FFF;
-	border: 5px solid #EEE;
 
 	.boxShadow(2px 2px 5px #333);
 	.borderRadius(10px);
-	.gradientV(#908f8f, #757575, #908f8f, #757575);
+	.gradientV(#494f58, #42484f, #494f58, #42484f);
 }
 .Preferences label {
 	display: block;
 	padding: 10px 0;
 }
-
 .Preferences .TextField {
 	width: 98%;
+}
+.Preferences .closeButton {
+	color: #FFF;
+	float: right;
+}
+
+.Preferences .closeButton:hover {
+	text-decoration: underline;
 }

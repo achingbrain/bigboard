@@ -7,7 +7,6 @@ include(bigboard.gui.tickets.TicketList);
 bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 	_loadingTickets: null,
 	_tickets: [],
-	_ticketSystem: null,
 
 	initialize: function($super, args) {
 		try {
@@ -15,17 +14,17 @@ bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 
 			this.addClass("TicketBoard");
 
-			bbq.lang.Watchable.registerGlobalListener("onMilestoneSelected", this._milestoneSelected.bind(this));
+			this._loadingTickets = true;
 		} catch(e) {
 			Log.error("Error constructing Error", e);
 		}
 	},
 
-	_milestoneSelected: function(sender, milestone) {
+	milestoneSelected: function(milestone) {
 		this._loadingTickets = true;
 		this.render();
 
-		this.options.ticketSystem.getTicketList(milestone, this._loadedTickets.bind(this))
+		currentPage.server.getTicketList(milestone, this._loadedTickets.bind(this))
 	},
 
 	_loadedTickets: function(tickets) {
@@ -48,19 +47,24 @@ bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 		// sort tickets into groups
 		var groups = {};
 
+		currentPage.server.getTicketStatuses().each(function(status) {
+			groups[status.status] = [];
+		});
+
 		this._tickets.each(function(ticket) {
 			if(!groups[ticket.getStatus()]) {
-				groups[ticket.getStatus()] = [];
+				return;
 			}
 
 			groups[ticket.getStatus()].push(ticket);
 		});
 
-		for(var key in groups) {
+		currentPage.server.getTicketStatuses().each(function(status) {
 			this.appendChild(new bigboard.gui.tickets.TicketList({
-				name: key,
-				tickets: groups[key]
+				name: status.title,
+				max: status.max,
+				tickets: groups[status.status]
 			}));
-		}
+		}.bind(this));
 	}
 });

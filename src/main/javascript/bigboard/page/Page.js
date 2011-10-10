@@ -4,6 +4,7 @@ include(bbq.util.Log);
 include(bbq.language.Language);
 include(bbq.gui.button.NativeButton);
 include(bbq.ajax.JSONRequest);
+include(bbq.web.Persistable);
 
 bigboard.page.Page = new Class.create(bbq.page.Page, {
 	_wonderBar: null,
@@ -11,6 +12,8 @@ bigboard.page.Page = new Class.create(bbq.page.Page, {
 	initialize: function($super, args) {
 		try {
 			$super(args);
+
+			bbq.web.Persistable.typeHints = ["bigboard", "bbq"];
 
 			Language.load({section: this._getLanguageSection(), postLoad: this._languageLoaded.bind(this)});
 		} catch(e) {

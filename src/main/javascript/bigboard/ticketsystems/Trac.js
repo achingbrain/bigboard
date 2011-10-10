@@ -2,6 +2,7 @@ include(bigboard.ticketsystems.TicketSystem);
 include(bbq.ajax.ForwardingJSONRequest);
 include(bigboard.domain.Milestone);
 include(bigboard.domain.Ticket);
+include(bbq.util.PersistenceUtil);
 
 bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSystem, {
 
@@ -67,7 +68,8 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 					return;
 				}
 
-				this._descapeResponse(json.result);
+				//this._descapeResponse(json.result);
+				PersistenceUtil.deserialize(json.result);
 
 				var milestone = new bigboard.domain.Milestone();
 				milestone.setName(name);
@@ -140,7 +142,9 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 
 						json.result.each(function(result) {
 							result = result.result;
-							this._descapeResponse(result);
+							//this._descapeResponse(result);
+
+							PersistenceUtil.deserialize(result);
 
 							var ticket = new bigboard.domain.Ticket();
 							ticket.setId(result[0]);
@@ -170,54 +174,5 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 			}.bind(this),
 			onFailure: onError
 		});
-	},
-
-	_descapeResponse: function(args) {
-		if (!args ||
-				Object.isFunction(args) ||
-				Object.isNumber(args) ||
-				Object.isString(args)) {
-			return;
-		}
-
-		if (Object.isArray(args)) {
-			for (var i = 0; i < args.length; i++) {
-				if(args[i] && args[i]["__jsonclass__"]) {
-					args[i] = this._recreateObject(args[i]);
-				} else {
-					this._descapeResponse(args[i]);
-				}
-			}
-		} else if (Object.isHash(args)) {
-			args.keys().each(function(key) {
-				if (args.get(key) && args.get(key)["__jsonclass__"]) {
-					args.set(key, this._recreateObject(args.get(key)));
-				} else {
-					this._descapeResponse(args.get(key));
-				}
-			}.bind(this));
-		} else {
-			for (var key in args) {
-				if (args[key] && args[key]["__jsonclass__"]) {
-					args[key] = this._recreateObject(args[key]);
-				} else {
-					this._descapeResponse(args[key]);
-				}
-			}
-		}
-	},
-
-	_recreateObject: function(data) {
-		data = data["__jsonclass__"];
-
-		if(data[0] == "datetime") {
-			return new Date(data[1]);
-		} else if(data[0] == "binary") {
-			return atob(data[1]);
-		} else {
-			Log.warn("Unknown __jsonclass__ type: " + data[0]);
-		}
-
-		return null;
 	}
 });

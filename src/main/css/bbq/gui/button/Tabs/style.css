@@ -1,0 +1,14 @@
+.Tabs {
+	margin-bottom: 10px;
+}
+.Tabs li {
+	display: inline-block;
+}
+.Tabs a {
+	display: block;
+	background-color: #666;
+	color: #FFF;
+	padding: 5px 10px;
+
+	.borderTopRadius(5px);
+}

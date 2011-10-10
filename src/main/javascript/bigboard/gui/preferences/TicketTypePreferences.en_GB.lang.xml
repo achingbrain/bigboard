@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="tickettypes.types">Ticket types (e.g. Development task, feature request, etc)</entry>
+	<entry key="tickettypes.add">Add</entry>
+	<entry key="tickettypes.delete">Delete</entry>
+	<entry key="tickettypes.save">Save</entry>
+	<entry key="tickettypes.type">Type</entry>
+	<entry key="tickettypes.colour">Colour</entry>
+	<entry key="tickettypes.default">Default</entry>
+	<entry key="tickettypes.green">Green</entry>
+	<entry key="tickettypes.yellow">Yellow</entry>
+	<entry key="tickettypes.red">Red</entry>
+	<entry key="tickettypes.orange">Orange</entry>
+	<entry key="tickettypes.blue">Blue</entry>
+</properties>

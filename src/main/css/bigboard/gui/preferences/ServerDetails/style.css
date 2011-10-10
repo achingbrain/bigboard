@@ -1,0 +1,50 @@
+.ServerDetails {
+	display: inline-block;
+}
+
+.ServerDetails .Tabs {
+	width: 540px;
+	margin-bottom: 1px;
+	border-bottom: 1px solid #999;
+}
+.ServerDetails .Tabs li {
+	margin-right: 5px;
+}
+.ServerDetails .savePanel {
+	text-align: right;
+	padding: 5px;
+	background-color: #555;
+}
+.ServerDetails .AccessPreferences,
+.ServerDetails .TicketTypePreferences,
+.ServerDetails .TicketStatusPreferences,
+.ServerDetails .UserPreferences {
+	background-color: #666;
+	padding: 10px;
+	width: 520px;
+	min-height: 300px;
+}
+
+.ServerDetails .TicketTypePreferences table,
+.ServerDetails .TicketStatusPreferences table,
+.ServerDetails .UserPreferences table {
+	margin: 10px 0;
+	width: 100%;
+	background-color: #666;
+	border-collapse: collapse;
+}
+
+.ServerDetails .TicketTypePreferences th,
+.ServerDetails .TicketStatusPreferences th,
+.ServerDetails .UserPreferences th {
+	background-color: #999;
+	padding: 5px;
+	font-weight: bold;
+	border: 1px solid #333;
+}
+
+.ServerDetails .TicketTypePreferences td,
+.ServerDetails .TicketStatusPreferences td,
+.ServerDetails .UserPreferences td {
+	padding: 5px;
+}

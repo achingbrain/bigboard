@@ -2,6 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="header.title">The Big Board</entry>
-	<entry key="header.server">Choose server</entry>
+	<entry key="header.preferences">Preferences</entry>
+	<entry key="header.servers">Choose server</entry>
 	<entry key="header.milestone">Showing milestone</entry>
 </properties>

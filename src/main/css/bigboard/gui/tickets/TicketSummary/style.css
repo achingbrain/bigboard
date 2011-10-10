@@ -1,9 +1,13 @@
-@feature_start: #8bf08b;
-@feature_end: desaturate(darken(@feature_start, 20%), 20%);
-@defect_start: #f0928b;
-@defect_end: desaturate(darken(@defect_start, 20%), 10%);
-@enhancement_start: #ecf08b;
-@enhancement_end: desaturate(darken(@enhancement_start, 20%), 20%);
+@green_start: #8bf08b;
+@green_end: desaturate(darken(@green_start, 20%), 20%);
+@red_start: #f0928b;
+@red_end: desaturate(darken(@red_start, 20%), 10%);
+@yellow_start: #ecf08b;
+@yellow_end: desaturate(darken(@yellow_start, 20%), 20%);
+@blue_start: #8bb6f0;
+@blue_end: desaturate(darken(@blue_start, 20%), 20%);
+@orange_start: #f0cb8b;
+@orange_end: desaturate(darken(@yellow_start, 20%), 20%);
 
 .TicketSummary {
 	background-color: #CCC;
@@ -21,23 +25,35 @@
 	background: #EEE;
 	cursor: pointer;
 }
-.TicketSummary.TicketSummary_type_feature {
-	.gradientV(@feature_start, @feature_end, @feature_start, @feature_end);
+.TicketSummary.TicketSummary_type_green {
+	.gradientV(@green_start, @green_end, @green_start, @green_end);
 }
-.TicketSummary.TicketSummary_type_feature:hover {
-	background: @feature_start;
+.TicketSummary.TicketSummary_type_green:hover {
+	background: @green_start;
 }
-.TicketSummary.TicketSummary_type_defect {
-	.gradientV(@defect_start, @defect_end, @defect_start, @defect_end);
+.TicketSummary.TicketSummary_type_red {
+	.gradientV(@red_start, @red_end, @red_start, @red_end);
 }
-.TicketSummary.TicketSummary_type_defect:hover {
-	background: @defect_start;
+.TicketSummary.TicketSummary_type_red:hover {
+	background: @red_start;
 }
-.TicketSummary.TicketSummary_type_enhancement {
-	.gradientV(@enhancement_start, @enhancement_end, @enhancement_start, @enhancement_end);
+.TicketSummary.TicketSummary_type_yellow {
+	.gradientV(@yellow_start, @yellow_end, @yellow_start, @yellow_end);
 }
-.TicketSummary.TicketSummary_type_enhancement:hover {
-	background: @enhancement_start;
+.TicketSummary.TicketSummary_type_yellow:hover {
+	background: @yellow_start;
+}
+.TicketSummary.TicketSummary_type_blue {
+	.gradientV(@blue_start, @blue_end, @blue_start, @blue_end);
+}
+.TicketSummary.TicketSummary_type_blue:hover {
+	background: @blue_start;
+}
+.TicketSummary.TicketSummary_type_orange {
+	.gradientV(@orange_start, @orange_end, @orange_start, @orange_end);
+}
+.TicketSummary.TicketSummary_type_orange:hover {
+	background: @orange_start;
 }
 .TicketSummary h4 {
 	clear: both;

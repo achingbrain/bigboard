@@ -1,0 +1,25 @@
+.AccessPreferences .URLField {
+	display: block;
+}
+.AccessPreferences .LoadingNotification {
+	display: inline-block;
+}
+.AccessPreferences .needsAuthentication {
+	display: inline-block;
+	float: right;
+	padding: 0;
+}
+.AccessPreferences .error {
+	color: #F10;
+}
+.AccessPreferences .ok {
+	color: #080;
+}
+
+.AccessPreferences p {
+	margin: 0 0 5px 0;
+}
+
+.AccessPreferences label {
+	margin-bottom: 5px;
+}

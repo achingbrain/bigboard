@@ -1,8 +1,7 @@
 include(bbq.gui.GUIWidget);
 include(bbq.util.Log);
-include(bbq.gui.button.ButtonHolder);
 include(bbq.gui.button.GUIButton);
-include(bigboard.gui.preferences.ServerPreferences);
+include(bigboard.gui.preferences.Preferences);
 include(bbq.gui.form.DropDown);
 include(bbq.web.Preferences);
 
@@ -14,6 +13,8 @@ bigboard.gui.header.Header = new Class.create(bbq.gui.GUIWidget, {
 			$super(args);
 
 			this.addClass("Header");
+
+			bbq.lang.Watchable.registerGlobalListener("onUpdatedServerPreferences", this.render.bind(this))
 		} catch(e) {
 			Log.error("Error constructing Error", e);
 		}
@@ -26,61 +27,106 @@ bigboard.gui.header.Header = new Class.create(bbq.gui.GUIWidget, {
 
 		this.appendChild(DOMUtil.createElement("h1", Language.get("header.title")));
 
-		var buttonHolder = new bbq.gui.button.ButtonHolder();
-		buttonHolder.addButton(new bbq.gui.button.GUIButton({
-			text: Language.get("header.server"),
-			toolTip: Language.get("header.server"),
+		this.appendChild(new bbq.gui.button.GUIButton({
+			text: Language.get("header.preferences"),
+			toolTip: Language.get("header.preferences"),
 			onClick: this.showServerPreferences.bind(this),
 			attributes: {
 				className: "serverSettings"
 			}
 		}));
 
-		this.appendChild(buttonHolder);
+		if(currentPage.server == null) {
+			return;
+		}
+
+		var index = Preferences.get(BIGBOARD_PREFERENCES.LAST_SELECTED_SERVER, 0);
+
+		var servers = [];
+		Preferences.get(BIGBOARD_PREFERENCES.SERVER_LIST, []).each(function(server) {
+			servers.push({
+				key: server.getName() ? server.getName() : server.getUrl(),
+				value: server
+			});
+		});
+
+		// show list of servers
+		var serverList = new bbq.gui.form.DropDown({
+			options: servers,
+			value: servers[index].value,
+			onChange: function(field) {
+				var selected = field.getValue();
+
+				Preferences.get(BIGBOARD_PREFERENCES.SERVER_LIST, []).each(function(server, index) {
+					if (server.getUrl() == selected.getUrl()) {
+						Preferences.set(BIGBOARD_PREFERENCES.LAST_SELECTED_SERVER, index);
+
+						currentPage.server = server;
+					}
+				});
+
+				this.notifyListeners("onServerSelected", selected);
+			}.bind(this)
+		});
+
+		this.appendChild(DOMUtil.createElement("label", [
+			Language.get("header.servers"),
+			serverList
+		]));
+
+		var milestoneList = new bbq.gui.form.DropDown({
+			options: this._milestones,
+			onChange: function(field) {
+				// update server with last selected milestone value
+				var servers = Preferences.get(BIGBOARD_PREFERENCES.SERVER_LIST, []);
+				servers.each(function(server) {
+					if(server.getUrl() == currentPage.server.getUrl()) {
+						server.setLastSelectedMilestone(field.getValue());
+						currentPage.server.setLastSelectedMilestone(field.getValue());
+					}
+				});
+				Preferences.set(BIGBOARD_PREFERENCES.SERVER_LIST, servers);
+
+				this.notifyListeners("onMilestoneSelected", field.getValue());
+			}.bind(this)
+		});
+		milestoneList.setValue(currentPage.server.getLastSelectedMilestone());
 
 		this._milestones = this.appendChild(DOMUtil.createElement("label", [
 			Language.get("header.milestone"),
-			new bbq.gui.form.DropDown()
+			milestoneList
 		]));
 	},
 
 	showServerPreferences: function() {
-		var prefs = new bigboard.gui.preferences.ServerPreferences();
+		var prefs = new bigboard.gui.preferences.Preferences();
 
 		currentPage.addModalLayer(prefs);
 	},
 
 	showMilestones: function(milestones) {
-		var milestoneList = [];
+		this._milestones = [];
+		var milestoneSelected = null;
 
 		milestones.each(function(milestone) {
-			milestoneList.push({
+			if(milestone == currentPage.server.getLastSelectedMilestone()) {
+				milestoneSelected = milestone;
+			}
+
+			this._milestones.push({
 				key: milestone,
 				value: milestone
 			});
-		});
+		}.bind(this));
 
-		var dropDown = new bbq.gui.form.DropDown({
-			options: milestoneList,
-			onChange: function() {
-				Preferences.set(BIGBOARD_PREFERENCES.LAST_SELECTED_MILESTONE, dropDown.getValue());
-
-				this.notifyListeners("onMilestoneSelected", dropDown.getValue());
-			}.bind(this)
-		});
-
-		DOMUtil.emptyNode(this._milestones);
-		this._milestones.appendChild(document.createTextNode(Language.get("header.milestone")));
-		dropDown.appendTo(this._milestones);
-
-		var lastMilestone = Preferences.get(BIGBOARD_PREFERENCES.LAST_SELECTED_MILESTONE);
-
-		if(lastMilestone) {
-			dropDown.setValue(lastMilestone);
-		}
+		this.render();
 
 		if(milestones.length > 0) {
-			this.notifyListeners("onMilestoneSelected", dropDown.getValue());
+			if(!milestoneSelected) {
+				milestoneSelected = milestones[0];
+			}
+
+			this.notifyListeners("onMilestoneSelected", milestoneSelected);
 		}
 	}
 });

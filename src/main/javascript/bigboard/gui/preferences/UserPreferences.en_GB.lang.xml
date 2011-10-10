@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="userpreferences.avataroverrideurl">Override domain for Gravatar</entry>
+	<entry key="userpreferences.users">Users</entry>
+	<entry key="userpreferences.add">Add</entry>
+	<entry key="userpreferences.delete">Delete</entry>
+	<entry key="userpreferences.save">Save</entry>
+	<entry key="userpreferences.username">Ticket system user name</entry>
+	<entry key="userpreferences.emailaddress">Gravatar email address</entry>
+	<entry key="userpreferences.backloguser">Backlog user</entry>
+</properties>

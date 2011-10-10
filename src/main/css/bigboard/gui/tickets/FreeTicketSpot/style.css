@@ -1,0 +1,7 @@
+.FreeTicketSpot {
+	border: 3px dashed #666;
+	height: 100px;
+	margin-bottom: 10px;
+
+	.borderRadius(5px);
+}

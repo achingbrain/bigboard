@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="serverdetails.access">Access</entry>
+	<entry key="serverdetails.tickettypes">Ticket types</entry>
+	<entry key="serverdetails.ticketstatuses">Ticket statuses</entry>
+	<entry key="serverdetails.users">Users</entry>
+	<entry key="serverdetails.save">Save</entry>
+</properties>

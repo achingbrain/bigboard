@@ -1,0 +1,48 @@
+@green_start: #8bf08b;
+@green_end: desaturate(darken(@green_start, 20%), 20%);
+@red_start: #f0928b;
+@red_end: desaturate(darken(@red_start, 20%), 10%);
+@yellow_start: #ecf08b;
+@yellow_end: desaturate(darken(@yellow_start, 20%), 20%);
+@blue_start: #8bb6f0;
+@blue_end: desaturate(darken(@blue_start, 20%), 20%);
+@orange_start: #f0cb8b;
+@orange_end: desaturate(darken(@yellow_start, 20%), 20%);
+
+.TicketDetail.TicketDetail_type_green {
+	.gradientV(@green_start, @green_end, @green_start, @green_end);
+}
+.TicketDetail.TicketDetail_type_red {
+	.gradientV(@red_start, @red_end, @red_start, @red_end);
+}
+.TicketDetail.TicketDetail_type_yellow {
+	.gradientV(@yellow_start, @yellow_end, @yellow_start, @yellow_end);
+}
+.TicketDetail.TicketDetail_type_blue {
+	.gradientV(@blue_start, @blue_end, @blue_start, @blue_end);
+}
+.TicketDetail.TicketDetail_type_orange {
+	.gradientV(@orange_start, @orange_end, @orange_start, @orange_end);
+}
+
+.TicketDetail {
+	padding: 20px;
+	position: fixed;
+	top: 100px;
+	width: 700px;
+	left: 50%;
+	margin-left: -350px;
+	z-index: 100;
+	color: #333;
+
+	.boxShadow(2px 2px 5px #333);
+	.borderRadius(10px);
+}
+.TicketDetail .close_button {
+	float: right;
+	background: url(/images/bigboard/gui/tickets/TicketDetail/close.png) no-repeat center center;
+	overflow: hidden;
+	padding: 20px 0 0 0;
+	width: 20px;
+	height: 0;
+}

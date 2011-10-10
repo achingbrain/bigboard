@@ -1,20 +1,3 @@
 .ServerPreferences {
 	
 }
-.ServerPreferences .URLField {
-	display: block;
-}
-.ServerPreferences .LoadingNotification {
-	display: inline-block;
-}
-.ServerPreferences .needsAuthentication {
-	display: inline-block;
-	float: right;
-	padding: 0;
-}
-.ServerPreferences .error {
-	color: #F10;
-}
-.ServerPreferences .ok {
-	color: #080;
-}

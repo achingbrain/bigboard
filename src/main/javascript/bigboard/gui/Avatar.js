@@ -21,24 +21,32 @@ bigboard.gui.Avatar = new Class.create(bbq.gui.GUIWidget, {
 		this.empty();
 
 		// http://my.server.foo:8080/somepath OR http://my.server.foo/somepath
-		var server = Preferences.get(BIGBOARD_PREFERENCES.SERVER);
+		var servers = Preferences.get(BIGBOARD_PREFERENCES.SERVER_LIST, []);
+		var index = Preferences.get(BIGBOARD_PREFERENCES.DEFAULT_SERVER, 0);
 
-		var parts = server.split("://");
+		if (servers.length >= index) {
+			index = 0;
+		}
+
+		var server = servers[index];
+		var url = server.getUrl();
+
+		var parts = url.split("://");
 
 		// my.server.foo:8080/bar
-		server = parts[1];
+		url = parts[1];
 
-		parts = server.split(":");
+		parts = url.split(":");
 
 		// my.server.foo OR my.server.foo/bar
-		server = parts[0];
+		url = parts[0];
 
-		parts = server.split("/");
+		parts = url.split("/");
 
 		// my.server.foo
-		server = parts[0];
+		url = parts[0];
 
-		var email = this.options.user + "@" + server;
+		var email = this.options.user + "@" + url;
 		email = email.toLowerCase();
 		
 		var hash = Crypto.MD5.hex_md5(email);

@@ -27,6 +27,16 @@
   border-bottom-right-radius: @radius;
 }
 
+// Rounded Corners
+.borderTopRadius(@radius: 5px) {
+  -moz-border-radius-topleft: @radius; // FF 1+
+  -moz-border-radius-topright: @radius; // FF 1+
+  -webkit-border-top-left-radius: @radius; // WebKit
+  -webkit-border-top-right-radius: @radius; // WebKit
+  border-top-left-radius: @radius;
+  border-top-right-radius: @radius;
+}
+
 // Top-to-Bottom Gradient
 .gradientV(@start, @end, @ieStart, @ieEnd) {
   background-image: -moz-linear-gradient(top,  @start, @end); // FF 3.6

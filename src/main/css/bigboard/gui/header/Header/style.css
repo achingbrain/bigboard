@@ -2,7 +2,7 @@
 	display: block;
 	border-bottom: 1px solid #888;
 
-	.gradientV(#4b4b4b, #5f5f5f, #4b4b4b, #5f5f5f);
+	.gradientV(#495059, #40454d, #495059, #40454d);
 }
 
 .Header h1, .Header ul {
@@ -13,26 +13,25 @@
 	font-size: 2em;
 	color: #EEE;
 }
-.Header ul {
-	padding-top: 10px;
-}
-.Header ul li a {
+.Header a.serverSettings {
 	width: 30px;
 	height: 0;
 	padding: 30px 0 0 0;
 	overflow: hidden;
 	display: block;
 	background: no-repeat center center #333;
+	margin: 10px 10px 0 0;
 }
-.Header ul li a:hover {
+.Header a.serverSettings:hover {
 	background-color: #444;
 }
-.Header ul li a:active {
+.Header a.serverSettings:active {
 	background-color: #000;
 }
-.Header ul li a.serverSettings {
+.Header a.serverSettings {
 	border: 1px solid #888;
 	background-image: url(/images/bigboard/gui/header/Header/settings.png);
+	float: right;
 
 	.borderRadius(5px);
 }
@@ -40,6 +39,7 @@
 	color: #FFF;
 	display: inline-block;
 	padding: 10px;
+	margin-top: 8px;
 }
 .Header label select {
 	margin-left: 10px;
