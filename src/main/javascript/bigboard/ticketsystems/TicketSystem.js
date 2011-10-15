@@ -22,6 +22,10 @@ bigboard.ticketsystems.TicketSystem = new Class.create({
 		
 	},
 
+	getTicketSystemName: function() {
+
+	},
+
 	getMilestoneList: function(onComplete, onError) {
 
 	},
@@ -32,5 +36,17 @@ bigboard.ticketsystems.TicketSystem = new Class.create({
 
 	getTicketList: function(milestone, onComplete, onError) {
 
+	},
+
+	getLinkToTicket: function(ticket) {
+
+	},
+
+	getLinkToReporter: function(reporter) {
+
+	},
+
+	wikiToHtml: function(text, onComplete, onError) {
+		
 	}
 });

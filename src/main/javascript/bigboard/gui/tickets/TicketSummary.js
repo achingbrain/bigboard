@@ -5,6 +5,7 @@ include(bbq.gui.LoadingNotification);
 include(bbq.gui.button.GUIButton);
 include(bigboard.gui.Avatar);
 include(bigboard.gui.tickets.TicketDetail);
+include(bbq.date.DateFormatter);
 
 bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 
@@ -42,7 +43,7 @@ bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 		}
 
 		this.appendChild(DOMUtil.createElement("h5", "#" + this.options.ticket.getId()));
-		this.appendChild(DOMUtil.createElement("h6", this.options.ticket.getReported().getDate() + "/" + (this.options.ticket.getReported().getMonth() + 1) + "/" + this.options.ticket.getReported().getFullYear()));
+		this.appendChild(DOMUtil.createElement("time", DateFormatter.format(this.options.ticket.getReported(), "dd/mm/yyyy")));
 		this.appendChild(DOMUtil.createElement("h4", this.options.ticket.getSummary().truncate(40)));
 	}
 });

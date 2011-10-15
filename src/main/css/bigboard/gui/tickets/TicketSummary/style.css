@@ -63,7 +63,7 @@
 .TicketSummary h5 {
 	float: left;
 }
-.TicketSummary h6 {
+.TicketSummary time {
 	float: right;
 }
 .TicketSummary img {

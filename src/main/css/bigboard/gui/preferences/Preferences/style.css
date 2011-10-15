@@ -1,6 +1,6 @@
 .Preferences {
 	padding: 20px;
-	position: fixed;
+	position: absolute;
 	top: 100px;
 	width: 700px;
 	left: 50%;

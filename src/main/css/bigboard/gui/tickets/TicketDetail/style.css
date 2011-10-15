@@ -27,7 +27,7 @@
 
 .TicketDetail {
 	padding: 20px;
-	position: fixed;
+	position: absolute;
 	top: 100px;
 	width: 700px;
 	left: 50%;
@@ -37,12 +37,69 @@
 
 	.boxShadow(2px 2px 5px #333);
 	.borderRadius(10px);
+	.gradientV(#DDD, #CCC, #DDD, #CCC);
 }
 .TicketDetail .close_button {
 	float: right;
-	background: url(/images/bigboard/gui/tickets/TicketDetail/close.png) no-repeat center center;
+	background: url(/images/bigboard/gui/tickets/TicketDetail/close.png) no-repeat center 5px #CCC;
 	overflow: hidden;
-	padding: 20px 0 0 0;
-	width: 20px;
+	padding: 30px 0 0 0;
+	width: 30px;
 	height: 0;
+	margin: 0 0 10px 10px;
+	opacity: 0.5;
+	border: 1px solid #666;
+
+	.borderRadius(3px);
 }
+.TicketDetail .close_button:hover {
+	opacity: 0.8;
+	background: url(/images/bigboard/gui/tickets/TicketDetail/close.png) no-repeat center center #666;
+	border: 1px solid #333;
+}
+.TicketDetail h5 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.TicketDetail h5 a {
+	font-size: 0.5em;
+	font-weight: normal;
+	margin-left: 10px;
+	vertical-align: baseline;
+}
+
+.TicketDetail h5 a:hover {
+	text-decoration: underline;
+}
+
+.TicketDetail .Avatar {
+	float: left;
+	margin: 0 10px 15px 0;
+}
+
+.TicketDetail time {
+	margin: 10px 0;
+	display: block;
+}
+
+.TicketDetail h4 {
+	font-size: 1.8em;
+	font-weight: bold;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.TicketDetail .description p {
+	margin: 10px 0;
+	line-height: 1.2;
+}
+.TicketDetail .description tt {
+	font-family: "Courier New";
+}
+.TicketDetail .description li {
+	list-style: disc outside none;
+	margin: 0 30px 10px 30px;
+	line-height: 1.2;
+}
+

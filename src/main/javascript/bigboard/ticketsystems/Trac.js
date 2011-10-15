@@ -26,6 +26,10 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 		);
 	},
 
+	getTicketSystemName: function() {
+		return Language.get("trac.name");
+	},
+
 	getMilestoneList: function($super, onComplete, onError) {
 		new bbq.ajax.ForwardingJSONRequest({
 			url: this._url + "/login/jsonrpc",
@@ -172,6 +176,33 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 					onFailure: onError
 				});
 			}.bind(this),
+			onFailure: onError
+		});
+	},
+
+	getLinkToTicket: function(ticket) {
+		return currentPage.server.getUrl() + "/ticket/" + ticket.getId();
+	},
+
+	getLinkToReporter: function(reporter) {
+		return currentPage.server.getUrl() + "/query?status=!closed&reporter=" + reporter;
+	},
+
+	wikiToHtml: function(text, onComplete, onError) {
+		new bbq.ajax.ForwardingJSONRequest({
+			url: this._url + "/login/jsonrpc",
+			args: {
+				method: "wiki.wikiToHtml",
+				params: [
+					text
+				]
+			},
+			headers: {
+				Authorization: "Basic " + this._token
+			},
+			onSuccess: function(serverResponse, json) {
+				onComplete((json && json.result) ? json.result : null);
+			},
 			onFailure: onError
 		});
 	}

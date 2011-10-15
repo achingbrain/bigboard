@@ -126,6 +126,10 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 		return this._ticketSystem;
 	},
 
+	getTicketSystemName: function() {
+		return this._getTicketSystem().getTicketSystemName();
+	},
+
 	getMilestoneList: function(onComplete, onError) {
 		this._getTicketSystem().getMilestoneList(onComplete, onError);
 	},
@@ -136,5 +140,17 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 
 	getTicketList: function(milestone, onComplete, onError) {
 		this._getTicketSystem().getTicketList(milestone, onComplete, onError);
+	},
+
+	getLinkToTicket: function(ticket) {
+		return this._getTicketSystem().getLinkToTicket(ticket);
+	},
+
+	getLinkToReporter: function(reporter) {
+		return this._getTicketSystem().getLinkToReporter(reporter);
+	},
+
+	wikiToHtml: function(text, onComplete, onError) {
+		return this._getTicketSystem().wikiToHtml(text, onComplete, onError);
 	}
 });

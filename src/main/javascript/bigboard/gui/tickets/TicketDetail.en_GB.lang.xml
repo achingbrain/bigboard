@@ -2,4 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="ticketdetail.close">Close</entry>
+	<entry key="ticketdetail.view">(View in {system})</entry>
+	<entry key="ticketdetail.reported">Reported by {reporter} on {date}</entry>
 </properties>

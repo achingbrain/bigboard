@@ -4,8 +4,10 @@ include(bbq.lang.Watchable);
 include(bbq.gui.LoadingNotification);
 include(bbq.gui.button.GUIButton);
 include(bigboard.gui.Avatar);
+include(bbq.date.DateFormatter);
 
 bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
+	_ticketDescription: null,
 
 	initialize: function($super, args) {
 		try {
@@ -18,6 +20,8 @@ bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
 					this.addClass("TicketDetail_type_" + type.colour);
 				}
 			}.bind(this));
+
+			currentPage.server.wikiToHtml(this.options.ticket.getDescription(), this._gotTicketDescription.bind(this));
 		} catch(e) {
 			Log.error("Error constructing TicketSummary", e);
 		}
@@ -46,9 +50,36 @@ bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
 			}));
 		}
 
-		this.appendChild(DOMUtil.createElement("h5", "#" + this.options.ticket.getId()));
-		this.appendChild(DOMUtil.createElement("h6", this.options.ticket.getReported().getDate() + "/" + (this.options.ticket.getReported().getMonth() + 1) + "/" + this.options.ticket.getReported().getFullYear()));
+		this.appendChild(
+				DOMUtil.createElement("h5", [
+					"#" + this.options.ticket.getId(),
+					DOMUtil.createElement("a", Language.getFormatted("ticketdetail.view", {system: currentPage.server.getTicketSystemName()}), {
+						href: currentPage.server.getLinkToTicket(this.options.ticket)
+					})
+				])
+		);
+
+		this.appendChild(DOMUtil.createElement("time",
+				Language.getFormatted("ticketdetail.reported", {
+					reporter: DOMUtil.createElement("a", this.options.ticket.getReporter(), {
+						href: currentPage.server.getLinkToReporter(this.options.ticket.getReporter())
+					}),
+					date: DateFormatter.format(this.options.ticket.getReported(), "dd/mm/yyyy")
+				}), {
+					datetime: this.options.ticket.getReported()
+				}
+		));
+
+		this._ticketDescription = DOMUtil.createElement("div", {
+			className: "description"
+		});
+
 		this.appendChild(DOMUtil.createElement("h4", this.options.ticket.getSummary()));
-		this.appendChild(DOMUtil.createElement("p", this.options.ticket.getDescription()));
+		this.appendChild(this._ticketDescription);
+	},
+
+	_gotTicketDescription: function(text) {
+		DOMUtil.emptyNode(this._ticketDescription);
+		this._ticketDescription.innerHTML = text;
 	}
 });
