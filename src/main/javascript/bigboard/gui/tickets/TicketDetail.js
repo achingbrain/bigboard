@@ -20,8 +20,6 @@ bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
 					this.addClass("TicketDetail_type_" + type.colour);
 				}
 			}.bind(this));
-
-			currentPage.server.wikiToHtml(this.options.ticket.getDescription(), this._gotTicketDescription.bind(this));
 		} catch(e) {
 			Log.error("Error constructing TicketSummary", e);
 		}
@@ -70,16 +68,7 @@ bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
 				}
 		));
 
-		this._ticketDescription = DOMUtil.createElement("div", {
-			className: "description"
-		});
-
 		this.appendChild(DOMUtil.createElement("h4", this.options.ticket.getSummary()));
-		this.appendChild(this._ticketDescription);
-	},
-
-	_gotTicketDescription: function(text) {
-		DOMUtil.emptyNode(this._ticketDescription);
-		this._ticketDescription.innerHTML = text;
+		this.appendChild(this.options.ticket.getDescriptionDisplay());
 	}
 });

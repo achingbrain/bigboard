@@ -188,13 +188,13 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 		return currentPage.server.getUrl() + "/query?status=!closed&reporter=" + reporter;
 	},
 
-	wikiToHtml: function(text, onComplete, onError) {
+	loadData: function(ticket, onComplete, onError) {
 		new bbq.ajax.ForwardingJSONRequest({
 			url: this._url + "/login/jsonrpc",
 			args: {
 				method: "wiki.wikiToHtml",
 				params: [
-					text
+					ticket.getDescription()
 				]
 			},
 			headers: {

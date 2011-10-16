@@ -17,6 +17,9 @@ bigboard.domain.Ticket = new Class.create({
 	_severity: null,
 	_reported: null,
 
+	_loadedData: false,
+	_descriptionHolder: null,
+
 	getId: function() {
 		return this._id;
 	},
@@ -39,6 +42,34 @@ bigboard.domain.Ticket = new Class.create({
 
 	setLastUpdated: function(lastUpdated) {
 		this._lastUpdated = lastUpdated;
+	},
+
+	getDescriptionDisplay: function() {
+		if(!this._loadedData) {
+			this._descriptionHolder = DOMUtil.createElement("div", {
+				className: "description"
+			});
+			var loader = new bbq.gui.LoadingNotification();
+			loader.appendTo(this._descriptionHolder);
+
+			currentPage.server.loadData(this, function(text) {
+				this._loadedData = true;
+
+				DOMUtil.emptyNode(this._descriptionHolder);
+
+				this._description = text;
+				this._descriptionHolder.innerHTML = this._description;
+			}.bind(this))
+
+			return this._descriptionHolder;
+		}
+
+		var output = DOMUtil.createElement("div", {
+			className: "description"
+		});
+		output.innerHTML = this._description;
+
+		return output;
 	},
 
 	getDescription: function() {

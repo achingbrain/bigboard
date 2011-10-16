@@ -150,7 +150,7 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 		return this._getTicketSystem().getLinkToReporter(reporter);
 	},
 
-	wikiToHtml: function(text, onComplete, onError) {
-		return this._getTicketSystem().wikiToHtml(text, onComplete, onError);
+	loadData: function(ticket, onComplete, onError) {
+		return this._getTicketSystem().loadData(ticket, onComplete, onError);
 	}
 });

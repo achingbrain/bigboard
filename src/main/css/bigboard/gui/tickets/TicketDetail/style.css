@@ -95,7 +95,7 @@
 	line-height: 1.2;
 }
 .TicketDetail .description tt {
-	font-family: "Courier New";
+	font-family: "Courier New", monospace;
 }
 .TicketDetail .description li {
 	list-style: disc outside none;
