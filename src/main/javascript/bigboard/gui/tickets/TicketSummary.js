@@ -6,6 +6,7 @@ include(bbq.gui.button.GUIButton);
 include(bigboard.gui.Avatar);
 include(bigboard.gui.tickets.TicketDetail);
 include(bbq.date.DateFormatter);
+include(bigboard.gui.DragAndDrop);
 
 bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 
@@ -14,6 +15,8 @@ bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 			$super(args);
 
 			this.addClass("TicketSummary");
+
+			DragAndDropManager.makeDraggable(this);
 
 			currentPage.server.getTicketTypes().each(function(type) {
 				if(type.type == this.options.ticket.getType()) {
@@ -28,6 +31,14 @@ bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 		} catch(e) {
 			Log.error("Error constructing TicketSummary", e);
 		}
+	},
+
+	draggableStarted: function() {
+		this.setStyle("opacity", 0.4);
+	},
+
+	draggableStopped: function() {
+		this.setStyle("opacity", 1);
 	},
 
 	render: function($super) {

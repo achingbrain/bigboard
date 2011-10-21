@@ -412,4 +412,15 @@
 		
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>deployment</id>
+			<properties>
+				<generate.sources>false</generate.sources>
+				<use.local.js.libraries>false</use.local.js.libraries>
+				<bigboard.debug>false</bigboard.debug>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>

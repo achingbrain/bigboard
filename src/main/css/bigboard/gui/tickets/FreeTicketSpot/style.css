@@ -5,3 +5,6 @@
 
 	.borderRadius(5px);
 }
+.FreeTicketSpot.FreeTicketSpot_over {
+	background-color: #3b3f46;
+}

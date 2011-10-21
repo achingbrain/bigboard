@@ -1,9 +1,12 @@
+@ticket_list: #3b3f46;
+@ticket_list_over: darken(@ticket_list, 3%);
+
 .TicketList {
 	padding: 10px 10px 0 10px;
 	margin: 10px 0 10px 10px;
 	width: 14%;
 	display: inline-block;
-	background-color: #3b3f46;
+	background-color: @ticket_list;
 	vertical-align: text-top;
 
 	.borderRadius(5px);
@@ -19,4 +22,7 @@
 }
 .TicketList h4.no_capacity {
 	color: #F10;
+}
+.TicketList.TicketList_over {
+	background-color: @ticket_list_over;
 }

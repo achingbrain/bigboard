@@ -16,6 +16,7 @@
 	margin-bottom: 15px;
 	padding: 10px;
 	vertical-align: text-top;
+	overflow: hidden;
 
 	.borderRadius(5px);
 	.boxShadow(2px 2px 5px #333);
@@ -23,7 +24,7 @@
 }
 .TicketSummary:hover {
 	background: #EEE;
-	cursor: pointer;
+	cursor: move;
 }
 .TicketSummary.TicketSummary_type_green {
 	.gradientV(@green_start, @green_end, @green_start, @green_end);
