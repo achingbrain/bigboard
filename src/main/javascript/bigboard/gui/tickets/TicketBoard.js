@@ -54,6 +54,9 @@ bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 		var groups = {};
 		var filter = false;
 
+		// used to set dynamic width when we are not filtering ticket statuses
+		var numGroups = 0;
+
 		if(currentPage.server.getTicketStatuses().length > 0) {
 			filter = true;
 
@@ -69,24 +72,49 @@ bigboard.gui.tickets.TicketBoard = new Class.create(bbq.gui.GUIWidget, {
 				}
 
 				groups[ticket.getStatus()] = [];
+				numGroups++;
 			}
 
 			groups[ticket.getStatus()].push(ticket);
 		});
 
 		if(filter) {
+			var width = 100 / currentPage.server.getTicketStatuses().length;
+			width -= 3;
+
 			currentPage.server.getTicketStatuses().each(function(status) {
 				this.appendChild(new bigboard.gui.tickets.TicketList({
 					name: status.title,
 					max: status.max,
-					tickets: groups[status.status]
+					accepts: status.accepts,
+					after: status.after,
+					tickets: groups[status.status],
+					status: status.status,
+					board: this,
+					attributes: {
+						style: {
+							width: width + "%"
+						}
+					}
 				}));
 			}.bind(this));
 		} else {
+			var width = 100 / numGroups;
+
 			for(var status in groups) {
 				this.appendChild(new bigboard.gui.tickets.TicketList({
-					name: status,
-					tickets: groups[status]
+					name: status.title,
+					max: status.max,
+					accepts: status.accepts,
+					after: status.after,
+					tickets: groups[status.status],
+					status: status.status,
+					board: this,
+					attributes: {
+						style: {
+							width: width + "%"
+						}
+					}
 				}));
 			}
 		}

@@ -4,10 +4,14 @@
 .TicketList {
 	padding: 10px 10px 0 10px;
 	margin: 10px 0 10px 10px;
-	width: 14%;
+	min-width: 200px;
 	display: inline-block;
 	background-color: @ticket_list;
 	vertical-align: text-top;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
 
 	.borderRadius(5px);
 }

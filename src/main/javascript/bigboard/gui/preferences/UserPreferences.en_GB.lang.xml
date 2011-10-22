@@ -8,5 +8,5 @@
 	<entry key="userpreferences.save">Save</entry>
 	<entry key="userpreferences.username">Ticket system user name</entry>
 	<entry key="userpreferences.emailaddress">Gravatar email address</entry>
-	<entry key="userpreferences.backloguser">Backlog user</entry>
+	<entry key="userpreferences.ignoreusers">List of users that have no avatar (comma separated)</entry>
 </properties>

@@ -8,4 +8,6 @@
 	<entry key="ticketstatuses.status">Status</entry>
 	<entry key="ticketstatuses.title">Title</entry>
 	<entry key="ticketstatuses.max">Max</entry>
+	<entry key="ticketstatuses.accepts">Accepts</entry>
+	<entry key="ticketstatuses.thenstatus">After</entry>
 </properties>

@@ -46,7 +46,7 @@ bigboard.ticketsystems.TicketSystem = new Class.create({
 
 	},
 
-	wikiToHtml: function(text, onComplete, onError) {
+	setTicketStatus: function(ticket, status, onComplete, onError) {
 		
 	}
 });

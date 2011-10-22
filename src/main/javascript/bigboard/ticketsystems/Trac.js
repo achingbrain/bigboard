@@ -3,6 +3,7 @@ include(bbq.ajax.ForwardingJSONRequest);
 include(bigboard.domain.Milestone);
 include(bigboard.domain.Ticket);
 include(bbq.util.PersistenceUtil);
+include(bbq.date.DateFormatter);
 
 bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSystem, {
 
@@ -146,27 +147,10 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 
 						json.result.each(function(result) {
 							result = result.result;
-							//this._descapeResponse(result);
-
-							PersistenceUtil.deserialize(result);
 
 							var ticket = new bigboard.domain.Ticket();
-							ticket.setId(result[0]);
-							ticket.getLastUpdated(result[1]);
-							ticket.setStatus(result[3]["status"]);
-							ticket.setReported(result[2]);
-							ticket.setDescription(result[3]["description"]);
-							ticket.setReporter(result[3]["reporter"]);
-							ticket.setResolution(result[3]["resolution"]);
-							ticket.setCC(result[3]["cc"]);
-							ticket.setComponent(result[3]["component"]);
-							ticket.setSummary(result[3]["summary"]);
-							ticket.setPriority(result[3]["priority"]);
-							ticket.setKeywords(result[3]["keywords"]);
-							ticket.setMilestone(result[3]["milestone"]);
-							ticket.setOwner(result[3]["owner"]);
-							ticket.setType(result[3]["type"]);
-							ticket.setSevertiy(result[3]["severity"]);
+
+							this._updateTicket(ticket, result);
 
 							tickets.push(ticket);
 						}.bind(this));
@@ -205,5 +189,50 @@ bigboard.ticketsystems.Trac = new Class.create(bigboard.ticketsystems.TicketSyst
 			},
 			onFailure: onError
 		});
+	},
+
+	setTicketStatus: function(ticket, status, onComplete, onError) {
+		new bbq.ajax.ForwardingJSONRequest({
+			url: this._url + "/login/jsonrpc",
+			args: {
+				method: "ticket.update",
+				params: [
+					ticket.getId(), "", {
+						action: status,
+						_ts: {"__jsonclass__": ["datetime", DateFormatter.format(new Date(), DateFormatter.masks.isoDateTime)]}
+					}, false, currentPage.server.getUser()
+				]
+			},
+			headers: {
+				Authorization: "Basic " + this._token
+			},
+			onSuccess: function(serverResponse, json) {
+				this._updateTicket(ticket, json.result);
+
+				onComplete((json && json.result) ? json.result : null);
+			}.bind(this),
+			onFailure: onError
+		});
+	},
+
+	_updateTicket: function(ticket, data) {
+		PersistenceUtil.deserialize(data);
+
+		ticket.setId(data[0]);
+		ticket.getLastUpdated(data[1]);
+		ticket.setStatus(data[3]["status"]);
+		ticket.setReported(data[2]);
+		ticket.setDescription(data[3]["description"]);
+		ticket.setReporter(data[3]["reporter"]);
+		ticket.setResolution(data[3]["resolution"]);
+		ticket.setCC(data[3]["cc"]);
+		ticket.setComponent(data[3]["component"]);
+		ticket.setSummary(data[3]["summary"]);
+		ticket.setPriority(data[3]["priority"]);
+		ticket.setKeywords(data[3]["keywords"]);
+		ticket.setMilestone(data[3]["milestone"]);
+		ticket.setOwner(data[3]["owner"]);
+		ticket.setType(data[3]["type"]);
+		ticket.setSevertiy(data[3]["severity"]);
 	}
 });

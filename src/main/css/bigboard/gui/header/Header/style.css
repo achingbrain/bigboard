@@ -1,6 +1,7 @@
 .Header {
 	display: block;
 	border-bottom: 1px solid #888;
+	min-width: 880px;
 
 	.gradientV(#495059, #40454d, #495059, #40454d);
 }

@@ -47,8 +47,8 @@ bigboard.gui.DragAndDrop = new Class.create({
 
 		// find drop targets
 		this._findDropTargets(element).each(function(target) {
-			if (target.draggableEnter) {
-				target.draggableEnter(this._droppable);
+			if (target.dropTargetEnter) {
+				target.dropTargetEnter(this._droppable);
 			}
 		}.bind(this));
 
@@ -63,8 +63,8 @@ bigboard.gui.DragAndDrop = new Class.create({
 
 		// find drop targets
 		this._findDropTargets(element).each(function(target) {
-			if (target.draggableEnter) {
-				target.draggableEnter(this._droppable);
+			if (target.dropTargetEnter) {
+				target.dropTargetEnter(this._droppable);
 			}
 		}.bind(this));
 
@@ -79,8 +79,8 @@ bigboard.gui.DragAndDrop = new Class.create({
 
 		// find drop targets
 		this._findDropTargets(element).each(function(target) {
-			if (target.draggableLeave) {
-				target.draggableLeave(this._droppable);
+			if (target.dropTargetLeave) {
+				target.dropTargetLeave(this._droppable);
 			}
 		}.bind(this));
 	},
@@ -92,8 +92,8 @@ bigboard.gui.DragAndDrop = new Class.create({
 
 		// find drop targets
 		this._findDropTargets(element).each(function(target) {
-			if(target.draggableDropped) {
-				target.draggableDropped(this._droppable);
+			if(target.dropTargetDropped) {
+				target.dropTargetDropped(this._droppable);
 			}
 		}.bind(this));
 
@@ -122,13 +122,18 @@ bigboard.gui.DragAndDrop = new Class.create({
 		widget.setAttribute("draggable", true);
 		widget.addClass("draggable");
 
+		widget.setStyle("-moz-user-select", "none");
+		widget.setStyle("-khtml-user-select", "none");
+		widget.setStyle("-webkit-user-select", "none");
+		widget.setStyle("user-select", "none");
+		widget.setStyle("-khtml-user-drag", "element");
+
 		Event.observe(widget.getRootNode(), "dragstart", this._onDragStart.bindAsEventListener(this));
 		Event.observe(widget.getRootNode(), "dragend", this._onDragEnd.bindAsEventListener(this));
 	},
 
-	makeDroppable: function(widget) {
+	makeDropTarget: function(widget) {
 		widget.addClass("DragAndDropManager_dropTarget");
-		//widget.setAttribute("draggable", true);
 
 		Event.observe(widget.getRootNode(), "dragover", this._onDragOver.bindAsEventListener(this));
 		Event.observe(widget.getRootNode(), "dragenter", this._onDragEnter.bindAsEventListener(this));
@@ -146,14 +151,8 @@ bigboard.gui.DragAndDrop = new Class.create({
 			if(parentNode.owner) {
 				var owner = parentNode.owner();
 
-				if(owner.hasClass("DragAndDropManager_dropTarget")) {
-					var acceptedTypes = owner.getDropTypes ? owner.getDropTypes() : [];
-
-					acceptedTypes.each(function(type) {
-						if(this._droppable instanceof type) {
-							output.push(owner);
-						}
-					}.bind(this));
+				if(owner.hasClass("DragAndDropManager_dropTarget") && owner.dropTargetWillAccept && owner.dropTargetWillAccept(this._droppable)) {
+					output.push(owner);
 				}
 			}
 

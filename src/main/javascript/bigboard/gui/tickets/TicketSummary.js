@@ -6,7 +6,7 @@ include(bbq.gui.button.GUIButton);
 include(bigboard.gui.Avatar);
 include(bigboard.gui.tickets.TicketDetail);
 include(bbq.date.DateFormatter);
-include(bigboard.gui.DragAndDrop);
+include(bbq.gui.DragAndDrop);
 
 bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 
@@ -46,7 +46,7 @@ bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 
 		this.empty();
 
-		if(currentPage.server.getBacklogUser() != this.options.ticket.getOwner()) {
+		if(this.options.ticket.getOwner() && currentPage.server.getIgnoreUsers().indexOf(this.options.ticket.getOwner()) == -1) {
 			this.appendChild(new bigboard.gui.Avatar({
 				user: this.options.ticket.getOwner(),
 				size: 16
@@ -56,5 +56,13 @@ bigboard.gui.tickets.TicketSummary = new Class.create(bbq.gui.GUIWidget, {
 		this.appendChild(DOMUtil.createElement("h5", "#" + this.options.ticket.getId()));
 		this.appendChild(DOMUtil.createElement("time", DateFormatter.format(this.options.ticket.getReported(), "dd/mm/yyyy")));
 		this.appendChild(DOMUtil.createElement("h4", this.options.ticket.getSummary().truncate(40)));
+	},
+
+	getTicket: function() {
+		return this.options.ticket;
+	},
+
+	getList: function() {
+		return this.options.list;
 	}
 });

@@ -60,6 +60,7 @@
 	clear: both;
 	padding-top: 5px;
 	font-weight: bold;
+	white-space: normal;
 }
 .TicketSummary h5 {
 	float: left;

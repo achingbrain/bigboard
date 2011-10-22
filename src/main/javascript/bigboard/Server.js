@@ -24,6 +24,11 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 			if(!this._settings["users"]) {
 				this._settings["users"] = [];
 			}
+
+			// holds details about remote users
+			if (!this._settings["ignore_users"]) {
+				this._settings["ignore_users"] = [];
+			}
 		} catch(e) {
 			Log.error("Error constructing Provider", e);
 		}
@@ -47,6 +52,14 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 
 	setUrl: function(url) {
 		this._settings["url"] = url;
+	},
+
+	getUser: function() {
+		return this._settings["user"];
+	},
+
+	setUser: function(user) {
+		this._settings["user"] = user;
 	},
 
 	getToken: function() {
@@ -89,12 +102,12 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 		this._settings["ticket_statuses"] = ticketStatuses;
 	},
 
-	getBacklogUser: function() {
-		return this._settings["backlog_user"];
+	getIgnoreUsers: function() {
+		return this._settings["ignore_users"];
 	},
 
-	setBacklogUser: function(backlogUser) {
-		this._settings["backlog_user"] = backlogUser;
+	setIgnoreUsers: function(ignoreUsers) {
+		this._settings["ignore_users"] = ignoreUsers;
 	},
 
 	getGlobalAvatarOverrideUrl: function() {
@@ -152,5 +165,9 @@ bigboard.Server = new Class.create(bbq.web.Persistable, {
 
 	loadData: function(ticket, onComplete, onError) {
 		return this._getTicketSystem().loadData(ticket, onComplete, onError);
+	},
+
+	setTicketStatus: function(ticket, status, onComplete, onError) {
+		return this._getTicketSystem().setTicketStatus(ticket, status, onComplete, onError);
 	}
 });

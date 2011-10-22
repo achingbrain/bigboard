@@ -1,5 +1,6 @@
 .TicketBoard {
 	vertical-align: text-top;
+	white-space: nowrap;
 }
 .TicketBoard .LoadingNotification {
 	color: #FFF;

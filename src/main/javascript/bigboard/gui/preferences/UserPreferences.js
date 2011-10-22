@@ -3,6 +3,7 @@ include(bbq.util.Log);
 include(bbq.gui.form.TextField);
 include(bbq.gui.form.EmailField);
 include(bbq.gui.button.NativeButton);
+include(bbq.gui.form.transformer.StringTokeniserTransformer);
 
 bigboard.gui.preferences.UserPreferences = new Class.create(bbq.gui.GUIWidget, {
 	_tbody: null,
@@ -32,12 +33,13 @@ bigboard.gui.preferences.UserPreferences = new Class.create(bbq.gui.GUIWidget, {
 		]));
 
 		this.appendChild(DOMUtil.createElement("label", [
-			DOMUtil.createElement("p", Language.get("userpreferences.backloguser")),
+			DOMUtil.createElement("p", Language.get("userpreferences.ignoreusers")),
 			new bbq.gui.form.TextField({
-				value: this.options.server.getBacklogUser(),
+				value: this.options.server.getIgnoreUsers(),
 				onChange: function(field) {
-					this.options.server.setBacklogUser(field.getValue());
-				}.bind(this)
+					this.options.server.setIgnoreUsers(field.getValue());
+				}.bind(this),
+				valueTransformer: new bbq.gui.form.transformer.StringTokeniserTransformer()
 			})
 		]));
 

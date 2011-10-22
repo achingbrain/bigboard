@@ -56,7 +56,10 @@ bigboard.gui.preferences.AccessPreferences = new Class.create(bbq.gui.GUIWidget,
 				onClick: this._testSettings.bind(this)
 			});
 			this._userNameField = new bbq.gui.form.TextField({
+				value: this.options.server.getUser(),
 				onChange: function() {
+					this.options.server.setUser(this._userNameField.getValue());
+
 					if(this._userNameField.getValue() && this._passwordField.getValue()) {
 						this.options.server.setToken(btoa(this._userNameField.getValue() + ":" + this._passwordField.getValue()));
 					} else {

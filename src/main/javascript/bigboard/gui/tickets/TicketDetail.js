@@ -41,7 +41,7 @@ bigboard.gui.tickets.TicketDetail = new Class.create(bbq.gui.GUIWidget, {
 			}
 		}));
 
-		if (currentPage.server.getBacklogUser() != this.options.ticket.getOwner()) {
+		if(this.options.ticket.getOwner() && currentPage.server.getIgnoreUsers().indexOf(this.options.ticket.getOwner()) == -1) {
 			this.appendChild(new bigboard.gui.Avatar({
 				user: this.options.ticket.getOwner(),
 				size: 80
