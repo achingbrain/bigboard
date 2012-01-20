@@ -27,8 +27,7 @@
 		<maven.plugin.release.version>2.1</maven.plugin.release.version>
 		<maven.plugin.exec.version>1.1.1</maven.plugin.exec.version>
 		<maven.plugin.minify.version>1.3.5</maven.plugin.minify.version>
-		<maven.plugin.bbq.version>1.1.4-SNAPSHOT</maven.plugin.bbq.version>
-		<maven.plugin.less.version>1.0.0</maven.plugin.less.version>
+		<maven.plugin.less.version>1.0.2</maven.plugin.less.version>
 		<maven.plugin.cobertura.version>2.5.1</maven.plugin.cobertura.version>
 		<maven.plugin.findbugs.version>2.3.2</maven.plugin.findbugs.version>
 
@@ -81,37 +80,60 @@
 		</testResources>
 
   		<plugins>
-			
+
 			<plugin>
 				<groupId>org.bbqjs</groupId>
-				<artifactId>bbq-maven-plugin</artifactId>
-				<version>${maven.plugin.bbq.version}</version>
+				<artifactId>bbq-resources-maven-plugin</artifactId>
+				<version>${bbq.version}</version>
 				<executions>
 					<execution>
-						<id>Compile JavaScript</id>
 						<goals>
-							<goal>marinateJS</goal>
+							<goal>processResources</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${project.build.directory}/${project.build.finalName}/images</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.bbqjs</groupId>
+				<artifactId>bbq-compiler-maven-plugin</artifactId>
+				<version>${bbq.version}</version>
+
+				<executions>
+
+					<!-- Compile JavaScript -->
+					<execution>
+						<id>compileJavaScript</id>
+						<goals>
+							<goal>compileJavaScript</goal>
 						</goals>
 						<configuration>
 							<outputDirectory>${project.build.directory}/js/bbq</outputDirectory>
 						</configuration>
 					</execution>
+
+					<!-- Compile CSS -->
 					<execution>
-						<id>Compile CSS</id>
+						<id>compileCSS</id>
 						<goals>
-							<goal>marinateCSS</goal>
+							<goal>compileCSS</goal>
 						</goals>
 						<configuration>
 							<outputDirectory>${project.build.directory}/css/bbq</outputDirectory>
-							<libraries>
-								<library>boilerplate.less</library>
-							</libraries>
+							<includes>
+								<include>boilerplate.less</include>
+							</includes>
 						</configuration>
 					</execution>
+
+					<!-- Compile Language -->
 					<execution>
-						<id>Compile Language</id>
+						<id>compileLanguage</id>
 						<goals>
-							<goal>marinateLanguage</goal>
+							<goal>compileLanguage</goal>
 						</goals>
 						<configuration>
 							<defaultLanguage>en_GB</defaultLanguage>
@@ -121,42 +143,33 @@
 							</supportedLanguages>
 						</configuration>
 					</execution>
+
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.bbqjs</groupId>
+				<artifactId>bbq-test-maven-plugin</artifactId>
+				<version>${bbq.version}</version>
+				<executions>
 					<execution>
-						<id>Test JavaScript</id>
 						<goals>
-							<goal>unitTestJavaScript</goal>
+							<goal>test</goal>
 						</goals>
-						<configuration>
-							<testDirectory>${project.basedir}/src/test/javascript</testDirectory>
-							<includes>
-								<include>javascript/libs/prototype-1.7.0.0.js</include>
-								<include>javascript/libs/unittest-1.8.0.js</include>
-							</includes>
-						</configuration>
-					</execution>
-					<execution>
-						<id>Copy Images</id>
-						<goals>
-							<goal>copyImages</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/${project.build.finalName}/images</outputDirectory>
-						</configuration>
 					</execution>
 				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.bbqjs</groupId>
-						<artifactId>bbq-js</artifactId>
-						<version>${bbq.version}</version>
-					</dependency>
-				</dependencies>
+				<configuration>
+					<testDirectory>${project.basedir}/src/test/javascript</testDirectory>
+					<includes>
+						<include>javascript/libs/prototype-1.7.0.0.js</include>
+						<include>javascript/libs/unittest-1.8.0.js</include>
+					</includes>
+				</configuration>
 			</plugin>
 
 			<plugin>
 				<groupId>net.achingbrain</groupId>
-				<artifactId>maven-less-plugin</artifactId>
+				<artifactId>less-maven-plugin</artifactId>
 				<version>${maven.plugin.less.version}</version>
 				<executions>
 					<execution>
