@@ -5,7 +5,7 @@ include(bigboard.gui.preferences.TicketTypePreferences);
 include(bigboard.gui.preferences.TicketStatusPreferences);
 include(bigboard.gui.preferences.UserPreferences);
 include(bigboard.Server);
-include(bbq.gui.button.Tabs);
+include(bigboard.gui.button.Tabs);
 
 bigboard.gui.preferences.ServerDetails = new Class.create(bbq.gui.GUIWidget, {
 	_panel: null,
@@ -19,7 +19,7 @@ bigboard.gui.preferences.ServerDetails = new Class.create(bbq.gui.GUIWidget, {
 			this.addClass("ServerDetails");
 
 			this._panel = DOMUtil.createElement("div");
-			this._tabs = new bbq.gui.button.Tabs();
+			this._tabs = new bigboard.gui.button.Tabs();
 			this._tabs.addButton(new bbq.gui.button.GUIButton({
 				text: Language.get("serverdetails.access"),
 				onClick: this._showServerAccess.bind(this)

@@ -1,6 +1,6 @@
 include(bbq.gui.GUIWidget);
 include(bbq.util.Log);
-include(bbq.gui.button.Tabs);
+include(bigboard.gui.button.Tabs);
 include(bigboard.gui.preferences.ServerPreferences);
 include(bbq.gui.button.GUIButton);
 
@@ -14,7 +14,7 @@ bigboard.gui.preferences.Preferences = new Class.create(bbq.gui.GUIWidget, {
 
 			this.addClass("Preferences");
 
-			this._tabs = new bbq.gui.button.Tabs();
+			this._tabs = new bigboard.gui.button.Tabs();
 			this._tabs.addButton(new bbq.gui.button.GUIButton({
 				text: Language.get("preferences.servers"),
 				onClick: this._showServerSettings.bind(this)

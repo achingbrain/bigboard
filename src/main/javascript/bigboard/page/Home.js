@@ -3,7 +3,7 @@ include(bigboard.gui.header.Header);
 include(bbq.web.Preferences);
 include(bbq.lang.Watchable);
 include(bigboard.gui.tickets.TicketBoard);
-include(bigboard.gui.DragAndDrop);
+include(bbq.gui.DragAndDrop);
 
 BIGBOARD_PREFERENCES = {
 	SERVER_LIST: "SERVER_LIST",
